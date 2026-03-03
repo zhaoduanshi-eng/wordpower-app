@@ -1,42 +1,52 @@
-let current = 0;
-const session = window.chapters.sessions.session1;
-if (!session) {
-  alert("数据加载失败，请刷新页面");
+const session = window.sessionData;
+
+const wordEl = document.getElementById("word");
+const meaningEl = document.getElementById("meaning");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+
+let currentQuestion = 0;
+
+function loadContent() {
+  wordEl.textContent = session.word.term;
+  meaningEl.textContent = session.word.meaning;
+  loadQuestion();
 }
-function speak(){
-  const word = document.getElementById("word").innerText;
-  speechSynthesis.speak(new SpeechSynthesisUtterance(word));
-}
 
-function loadWord(){
-  document.getElementById("word").innerText = session.word.term;
-  document.getElementById("meaning").innerText = session.word.meaning;
-}
+function loadQuestion() {
+  const quiz = session.quiz[currentQuestion];
+  questionEl.textContent = quiz.question;
+  optionsEl.innerHTML = "";
 
-function loadQuestion(){
-  document.getElementById("question").innerText = session.quiz[current].question;
-
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-
-  session.quiz[current].options.forEach(opt=>{
-    const btn=document.createElement("button");
-    btn.innerText=opt;
-    btn.style.display="block";
-    btn.style.margin="8px 0";
-    optionsDiv.appendChild(btn);
+  quiz.options.forEach((option, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = option;
+    btn.onclick = () => checkAnswer(index);
+    optionsEl.appendChild(btn);
   });
-
-  loadWord();
 }
 
-function nextQuestion(){
-  current++;
-  if(current>=session.quiz.length){
-    current=0;
+function checkAnswer(index) {
+  const correct = session.quiz[currentQuestion].answer;
+  if (index === correct) {
+    alert("正确！");
+  } else {
+    alert("错误！");
+  }
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion >= session.quiz.length) {
+    alert("已经是最后一题");
+    currentQuestion = 0;
   }
   loadQuestion();
 }
 
-loadQuestion();
-document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+function speak() {
+  const utter = new SpeechSynthesisUtterance(session.word.term);
+  speechSynthesis.speak(utter);
+}
+
+loadContent();
