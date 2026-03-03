@@ -1,4 +1,4 @@
-const chapters = {
+window.chapters =
   chapter1: {
     sessions: {
       session1: {
