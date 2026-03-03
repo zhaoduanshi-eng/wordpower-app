@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Power App</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7f9eb2">
+
+<style>
+body{
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  margin:0;
+  background:#f4f6f9;
+}
+header{
+  background:#7f9eb2;
+  color:white;
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+}
+.section{
+  padding:20px;
+}
+.card{
+  background:#c9d6df;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  margin-bottom:20px;
+}
+.word{
+  font-size:22px;
+  font-weight:bold;
+}
+button{
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  background:#4a6c82;
+  color:white;
+  cursor:pointer;
+}
+.quiz-box{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+
+<body>
+
+<header>Word Power – Session 1</header>
+
+<div class="section">
+  <div class="card">
+    <div class="word">Egotist</div>
+    <p><b>中文释义：</b>自我中心的人</p>
+    <button onclick="speak('Egotist')">发音</button>
+  </div>
+
+  <div class="quiz-box">
+    <h3>选择题</h3>
+    <p id="question"></p>
+    <div id="options"></div>
+    <br>
+    <button onclick="nextQuestion()">下一题</button>
+  </div>
+</div>
+
+<script>
+function speak(word){
+  speechSynthesis.speak(new SpeechSynthesisUtterance(word));
+}
+
+const quiz = [
+  {
+    q:"An egotist is someone who ____.",
+    options:["loves others","talks about himself constantly","is shy","avoids people"],
+  },
+  {
+    q:"Egotist means:",
+    options:["自私的人","谦虚的人","安静的人","快乐的人"],
+  }
+];
+
+let current=0;
+
+function loadQuestion(){
+  document.getElementById("question").innerText=quiz[current].q;
+  const optionsDiv=document.getElementById("options");
+  optionsDiv.innerHTML="";
+  quiz[current].options.forEach(opt=>{
+    const btn=document.createElement("button");
+    btn.innerText=opt;
+    btn.style.display="block";
+    btn.style.margin="8px 0";
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function nextQuestion(){
+  current++;
+  if(current>=quiz.length){current=0;}
+  loadQuestion();
+}
+
+loadQuestion();
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+
+</body>
+</html>
