@@ -1,5 +1,4 @@
-window.chapters =
-  chapter1: {
+window.chapters = {
     sessions: {
       session1: {
         title: "Session 1",
