@@ -1,7 +1,11 @@
 let current = 0;
 
-const session = window.chapters.chapter1.sessions.session1;
-
+const session = window.chapters
+  ? window.chapters.chapter1.sessions.session1
+  : null;
+if (!session) {
+  alert("数据加载失败，请刷新页面");
+}
 function speak(){
   const word = document.getElementById("word").innerText;
   speechSynthesis.speak(new SpeechSynthesisUtterance(word));
