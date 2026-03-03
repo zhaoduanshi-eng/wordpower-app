@@ -1,8 +1,5 @@
 let current = 0;
-
-const session = window.chapters
-  ? window.chapters.chapter1.sessions.session1
-  : null;
+const session = window.chapters.sessions.session1;
 if (!session) {
   alert("数据加载失败，请刷新页面");
 }
