@@ -42,3 +42,4 @@ function nextQuestion(){
 }
 
 loadQuestion();
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
