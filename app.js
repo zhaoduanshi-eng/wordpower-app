@@ -1,6 +1,6 @@
 let current = 0;
 
-const session = chapters.chapter1.sessions.session1;
+const session = window.chapters.chapter1.sessions.session1;
 
 function speak(){
   const word = document.getElementById("word").innerText;
