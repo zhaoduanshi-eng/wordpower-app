@@ -29,51 +29,9 @@
     <button onclick="nextQuestion()">下一题</button>
   </div>
 </div>
-
-<script>
-function speak(word){
-  speechSynthesis.speak(new SpeechSynthesisUtterance(word));
-}
-
-const quiz = [
-  {
-    q:"An egotist is someone who ____.",
-    options:["loves others","talks about himself constantly","is shy","avoids people"],
-  },
-  {
-    q:"Egotist means:",
-    options:["自私的人","谦虚的人","安静的人","快乐的人"],
-  }
-];
-
-let current=0;
-
-function loadQuestion(){
-  document.getElementById("question").innerText=quiz[current].q;
-  const optionsDiv=document.getElementById("options");
-  optionsDiv.innerHTML="";
-  quiz[current].options.forEach(opt=>{
-    const btn=document.createElement("button");
-    btn.innerText=opt;
-    btn.style.display="block";
-    btn.style.margin="8px 0";
-    optionsDiv.appendChild(btn);
-  });
-}
-
-function nextQuestion(){
-  current++;
-  if(current>=quiz.length){current=0;}
-  loadQuestion();
-}
-
-loadQuestion();
-
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('service-worker.js');
-}
-</script>
-
+  
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
 <!-- update -->
