@@ -1,22 +1,24 @@
 let current = 0;
 
+const session = chapters.chapter1.sessions.session1;
+
 function speak(){
   const word = document.getElementById("word").innerText;
   speechSynthesis.speak(new SpeechSynthesisUtterance(word));
 }
 
 function loadWord(){
-  document.getElementById("word").innerText = quiz[current].word;
-  document.getElementById("meaning").innerText = quiz[current].meaning;
+  document.getElementById("word").innerText = session.word.term;
+  document.getElementById("meaning").innerText = session.word.meaning;
 }
 
 function loadQuestion(){
-  document.getElementById("question").innerText = quiz[current].q;
+  document.getElementById("question").innerText = session.quiz[current].question;
 
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
 
-  quiz[current].options.forEach(opt=>{
+  session.quiz[current].options.forEach(opt=>{
     const btn=document.createElement("button");
     btn.innerText=opt;
     btn.style.display="block";
@@ -29,7 +31,7 @@ function loadQuestion(){
 
 function nextQuestion(){
   current++;
-  if(current>=quiz.length){
+  if(current>=session.quiz.length){
     current=0;
   }
   loadQuestion();
