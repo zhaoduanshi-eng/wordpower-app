@@ -42,4 +42,3 @@ function nextQuestion(){
 }
 
 loadQuestion();
-document.getElementById("nextBtn").onclick = nextQuestion;
